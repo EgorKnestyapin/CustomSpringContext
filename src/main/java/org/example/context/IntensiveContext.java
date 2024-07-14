@@ -18,6 +18,9 @@ public class IntensiveContext {
     private InjectionService injectionService;
     private Map<Class<?>, Object> cache = new HashMap<>();
 
+    /**
+     * @param packageName package to look for
+     */
     public IntensiveContext(String packageName) {
         this.packageName = packageName;
         this.searchService = new SearchServiceImpl();
@@ -25,6 +28,13 @@ public class IntensiveContext {
         this.injectionService = new InjectionServiceImpl();
     }
 
+    /**
+     * Retrieves an instance of the specified class type, initializing and injecting its dependencies into fields
+     * marked with annotations {@link org.example.annotations.IntensiveComponent}
+     *
+     * @param type class object representing the type to retrieve
+     * @return an instance of the specified typ
+     */
     public <T> T getObject(Class<T> type) {
         if (cache.containsKey(type)) {
             return (T) cache.get(type);
